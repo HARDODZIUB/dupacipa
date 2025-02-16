@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Przesyłek</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <h1>Nadaj Paczkę – Szybkie Wysyłki, Zadowoleni Klienci!</h1>
+</header>
+
+
+<nav>
+    <b><a href="kurier.html">Kalkulator Przesyłek</a></b>
+    <a href="informacje.html">O nas</a>
+    <a href="kontakt.html">Kontakt</a>
+    <div class="dropdown">
+        <a href="#" class="dropdown-toggle">Zaloguj się</a>
+        <div class="dropdown-menu">
+          <a href="logowanie.html">Logowanie</a>
+          <a href="rejestracja.html">Rejestracja</a>
+        </div>
+      </div>
+        
+</nav>
+
+
+<section id="calculator" class="active">
+    <h2>Kalkulator Przesyłek</h2>
+    <form id="packageForm">
+        <label for="length">Długość (cm):</label>
+        <input type="number" id="length" name="length" min="0" step="0.01" required><br><br>
+
+        <label for="width">Szerokość (cm):</label>
+        <input type="number" id="width" name="width" min="0" step="0.01" required><br><br>
+
+        <label for="height">Wysokość (cm):</label>
+        <input type="number" id="height" name="height" min="0" step="0.01" required><br><br>
+
+        <label for="weight">Waga (kg):</label>
+        <input type="number" id="weight" name="weight" min="0" step="0.01" required><br><br>
+
+        <label for="deliveryType">Rodzaj dostawy:</label>
+        <select id="deliveryType">
+            <option value="home">Kurier do domu</option>
+            <option value="pickup">Punkt odbioru / Paczkomat</option>
+        </select><br><br>
+
+        <button type="button" onclick="validateAndCalculate()">Oblicz ceny</button>
+    </form>
+
+    <h2>Proponowane ceny i czas dostawy</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Firma</th>
+                <th>Cena</th>
+                <th>Szacowany czas dostawy</th>
+            </tr>
+        </thead>
+
+        <tbody id="priceTable">
+           
+        </tbody>
+    </table>
+    <h1>Twoja Lokalizacja</h1>
+    <!-- Kontener na mapę -->
+    <div id="map"></div>
+    <!-- Wiadomość o błędzie -->
+    <p id="error" style="color: red;"></p>
+</section>
+
+<script>
+    function validateAndCalculate() {
+        const length = parseFloat(document.getElementById("length").value);
+        const width = parseFloat(document.getElementById("width").value);
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
+
+        if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(weight) || weight <= 0) {
+            alert("Proszę podać prawidłowe wartości dla wymiarów i wagi paczki.");
+            return;
+        }
+
+        calculatePrices();
+    }
+
+    function calculatePrices() {
+        const weight = parseFloat(document.getElementById("weight").value);
+        const deliveryType = document.getElementById("deliveryType").value;
+
+        
+        let extraCost = deliveryType === "home" ? 5 : 2;
+
+        
+        const estimatedTimes = {
+            pocztex: "2-3 dni",
+            dhl: "1-2 dni",
+            inpost: "1-3 dni",
+            ups: "1-2 dni",
+            orlen: "3-5 dni",
+            dpd: "1-3 dni"
+        };
+
+        
+        const pocztexPrice = 10 + weight * 1 + extraCost;
+        const dhlPrice = 15 + weight * 2 + extraCost;
+        const inpostPrice = 12 + weight * 1.5 + extraCost;
+        const upsPrice = 20 + weight * 2.5 + extraCost;
+        const orlenPrice = 8 + weight * 1 + extraCost;
+        const dpdPrice = 18 + weight * 2 + extraCost;
+
+        
+        const priceTable = document.getElementById("priceTable");
+        priceTable.innerHTML = `
+            <tr><td>Pocztex</td><td>${pocztexPrice.toFixed(2)} zł</td><td>${estimatedTimes.pocztex}</td></tr>
+            <tr><td>DHL</td><td>${dhlPrice.toFixed(2)} zł</td><td>${estimatedTimes.dhl}</td></tr>
+            <tr><td>InPost</td><td>${inpostPrice.toFixed(2)} zł</td><td>${estimatedTimes.inpost}</td></tr>
+            <tr><td>UPS</td><td>${upsPrice.toFixed(2)} zł</td><td>${estimatedTimes.ups}</td></tr>
+            <tr><td>Orlen Paczka</td><td>${orlenPrice.toFixed(2)} zł</td><td>${estimatedTimes.orlen}</td></tr>
+            <tr><td>DPD</td><td>${dpdPrice.toFixed(2)} zł</td><td>${estimatedTimes.dpd}</td></tr>
+        `;
+    }
+
+    function initMap() {
+            const mapContainer = document.getElementById("map");
+            const errorContainer = document.getElementById("error");
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+
+                        const map = new google.maps.Map(mapContainer, {
+                            zoom: 14,
+                            center: userLocation,
+                        });
+
+                        const marker = new google.maps.Marker({
+                            position: userLocation,
+                            map: map,
+                            title: "Jesteś tutaj",
+                        });
+                    },
+                    (error) => {
+                        errorContainer.textContent = `Nie można uzyskać lokalizacji: ${error.message}`;
+                    }
+                );
+            } else {
+                errorContainer.textContent = "Twoja przeglądarka nie obsługuje geolokalizacji.";
+            }
+        }
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMxWaJTmVwWPr-0ULMuUEjTKxc2J2wXyI&callback=initMap">
+</script>
+
+</body>
+</html>
