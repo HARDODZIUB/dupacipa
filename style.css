@@ -14,12 +14,11 @@ body {
 }
   
 .dropdown-toggle {
-    color: #333;
     text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
     background-color: #f9f9f9;
-    padding: 10px;
     border-radius: 4px;
-    transition: all 0.3s ease;
 }
   
 .dropdown-toggle:hover {
@@ -32,9 +31,8 @@ body {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    background-color: white;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgb(0, 0, 0, 20%);
     z-index: 1000;
     width: 150px;
     padding: 5px 0;
@@ -44,20 +42,19 @@ body {
     display: block;
     padding: 10px 15px;
     text-decoration: none;
+    text-align: center;
     color: #333;
     transition: background-color 0.3s ease;
 }
   
 .dropdown-menu a:hover {
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
     color: #4caf50;
 }
   
 .dropdown:hover .dropdown-menu {
     display: block;
 }
-
-
 
 header {
     background: linear-gradient(135deg, #4caf50, #388e3c);
