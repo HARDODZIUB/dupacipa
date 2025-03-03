@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Adrian Durczewski">
+        <meta name="description" content="Strona">
+        <meta name="keywords" content="">
+
+        <link rel="stylesheet" href="styl.css">
+        <link rel="icon" href="ikona.ico">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+        <title>Szablon HTML + CSS</title>
+    
+    </head>
+
+<body>
+
+    <header>
+        <img class="logo" src="logo.jpg" alt="logo">
+        <nav>
+            <ul class="nav_links">
+                <li><a href="#">Zamów kuriera</a></li>
+                <li><a href="#">Cennik</a></li>
+                <li><a href="#">Punkty nadań</a></li>
+                <li><a href="#">Śledzenie przesyłek</a></li>
+                <li><a href="#">Zaloguj się</a></li>
+            </ul>
+        </nav>
+        <a class="cta" href="#"><button class="header-button">Załóż konto</button></a>
+    </header>
+
+    <content>
+
+        <div class="text-container">
+            <h1>Potrzebujesz wysłać paczkę? Dzięki nam, zrobisz to w chwilę!</h1>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label>Kraj wysyłki</label>
+                <select>
+                    <option>Polska</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Kraj dostawy</label>
+                <select>
+                    <option>Polska</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Typ przesyłki</label>
+                <select>
+                    <option>Paczka</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Opakowanie</label>
+                <select>
+                    <option>Wybierz typ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Waga (kg)</label>
+                <input type="number" value="5">
+            </div>
+            <div class="form-group">
+                <label>Długość (cm)</label>
+                <input type="number" value="10">
+            </div>
+            <div class="form-group">
+                <label>Szerokość (cm)</label>
+                <input type="number" value="5">
+            </div>
+            <div class="form-group">
+                <label>Wysokość (cm)</label>
+                <input type="number" value="5">
+            </div>
+            
+        </div>
+
+        <button class="submit">Wyceń paczkę</button>
+
+    </content>
+
+
+</body>
